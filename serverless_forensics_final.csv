@@ -1,0 +1,97 @@
+group,attack_scenario,duration_ms,avg_incidence_rate,total_occurrences
+compromised,Event Injection,1316.23,3.37,274228
+compromised,Broken Authentication,1333.02,2.55,132195
+compromised,Sensitive Data Exposure,1339.92,4.49,233788
+compromised,Security Misconfiguration,1142.24,4.51,208387
+non-compromised,Event Injection,962.92,0,0
+non-compromised,Broken Authentication,722.31,0,0
+non-compromised,Sensitive Data Exposure,900.3,0,0
+non-compromised,Security Misconfiguration,879.77,0,0
+compromised,Event Injection,1198.6,3.37,274228
+compromised,Broken Authentication,1370.42,2.55,132195
+compromised,Sensitive Data Exposure,1369.92,4.49,233788
+compromised,Security Misconfiguration,1293.03,4.51,208387
+non-compromised,Event Injection,816.34,0,0
+non-compromised,Broken Authentication,902.54,0,0
+non-compromised,Sensitive Data Exposure,830.81,0,0
+non-compromised,Security Misconfiguration,585.51,0,0
+compromised,Event Injection,1218.1,3.37,274228
+compromised,Broken Authentication,1326.18,2.55,132195
+compromised,Sensitive Data Exposure,1282.6,4.49,233788
+compromised,Security Misconfiguration,1258.09,4.51,208387
+non-compromised,Event Injection,857.2,0,0
+non-compromised,Broken Authentication,978.51,0,0
+non-compromised,Sensitive Data Exposure,758.25,0,0
+non-compromised,Security Misconfiguration,689.69,0,0
+compromised,Event Injection,1159.37,3.37,274228
+compromised,Broken Authentication,1372.74,2.55,132195
+compromised,Sensitive Data Exposure,1123.08,4.49,233788
+compromised,Security Misconfiguration,1270.3,4.51,208387
+non-compromised,Event Injection,938.25,0,0
+non-compromised,Broken Authentication,741.46,0,0
+non-compromised,Sensitive Data Exposure,738.38,0,0
+non-compromised,Security Misconfiguration,780.67,0,0
+compromised,Event Injection,1169.8,3.37,274228
+compromised,Broken Authentication,1309.4,2.55,132195
+compromised,Sensitive Data Exposure,1243.1,4.49,233788
+compromised,Security Misconfiguration,1250.3,4.51,208387
+non-compromised,Event Injection,926.2,0,0
+non-compromised,Broken Authentication,732.26,0,0
+non-compromised,Sensitive Data Exposure,759.33,0,0
+non-compromised,Security Misconfiguration,778.51,0,0
+compromised,Event Injection,1205.05,3.37,274228
+compromised,Broken Authentication,1266.15,2.55,132195
+compromised,Sensitive Data Exposure,1247.38,4.49,233788
+compromised,Security Misconfiguration,1313.06,4.51,208387
+non-compromised,Event Injection,832.19,0,0
+non-compromised,Broken Authentication,814.48,0,0
+non-compromised,Sensitive Data Exposure,780.2,0,0
+non-compromised,Security Misconfiguration,737.5,0,0
+compromised,Event Injection,1059.16,3.37,274228
+compromised,Broken Authentication,1138.08,2.55,132195
+compromised,Sensitive Data Exposure,1164.35,4.49,233788
+compromised,Security Misconfiguration,1013.02,4.51,208387
+non-compromised,Event Injection,908.6,0,0
+non-compromised,Broken Authentication,821.18,0,0
+non-compromised,Sensitive Data Exposure,788.88,0,0
+non-compromised,Security Misconfiguration,767.39,0,0
+compromised,Event Injection,1134.1,3.37,274228
+compromised,Broken Authentication,1150.14,2.55,132195
+compromised,Sensitive Data Exposure,1154.09,4.49,233788
+compromised,Security Misconfiguration,1127.08,4.51,208387
+non-compromised,Event Injection,886.59,0,0
+non-compromised,Broken Authentication,780.49,0,0
+non-compromised,Sensitive Data Exposure,779.3,0,0
+non-compromised,Security Misconfiguration,758.5,0,0
+compromised,Event Injection,1156.07,3.37,274228
+compromised,Broken Authentication,1093.32,2.55,132195
+compromised,Sensitive Data Exposure,1056.11,4.49,233788
+compromised,Security Misconfiguration,1025.12,4.51,208387
+non-compromised,Event Injection,896.62,0,0
+non-compromised,Broken Authentication,792.21,0,0
+non-compromised,Sensitive Data Exposure,796.26,0,0
+non-compromised,Security Misconfiguration,716.43,0,0
+compromised,Event Injection,1492.24,3.37,274228
+compromised,Broken Authentication,978.43,2.55,132195
+compromised,Sensitive Data Exposure,1207.33,4.49,233788
+compromised,Security Misconfiguration,1131.54,4.51,208387
+non-compromised,Event Injection,905.29,0,0
+non-compromised,Broken Authentication,783.38,0,0
+non-compromised,Sensitive Data Exposure,828.44,0,0
+non-compromised,Security Misconfiguration,812.33,0,0
+compromised,Event Injection,1445.24,3.37,274228
+compromised,Broken Authentication,1107.15,2.55,132195
+compromised,Sensitive Data Exposure,1027.39,4.49,233788
+compromised,Security Misconfiguration,1044.13,4.51,208387
+non-compromised,Event Injection,927.36,0,0
+non-compromised,Broken Authentication,852.23,0,0
+non-compromised,Sensitive Data Exposure,824.72,0,0
+non-compromised,Security Misconfiguration,777.51,0,0
+compromised,Event Injection,1056.57,3.37,274228
+compromised,Broken Authentication,1070.36,2.55,132195
+compromised,Sensitive Data Exposure,1224.08,4.49,233788
+compromised,Security Misconfiguration,1245.21,4.51,208387
+non-compromised,Event Injection,915.42,0,0
+non-compromised,Broken Authentication,842.27,0,0
+non-compromised,Sensitive Data Exposure,748.72,0,0
+non-compromised,Security Misconfiguration,773.74,0,0
