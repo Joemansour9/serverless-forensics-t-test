@@ -1,65 +1,127 @@
 # Serverless Forensics: Automated Compromise Detection via Welch's t-test
 
-## Dataset Description
+Replication dataset and analysis for the paper *Serverless Forensics: Automated Compromise Detection via Welch's t-test* (Mansour, Shanmugam & Yeo, submitted to *Cybersecurity*, Springer Nature).
 
-This repository contains the raw statistical dataset
-(`serverless-forensics-t-test.csv`) used for the inferential
-quantitative evaluation discussed in Section 4 of the manuscript.
+## Repository Contents
 
-Runtime telemetry was captured from an experimental, multi-component
-AWS serverless testbed architecture. Logs were ingested via Amazon
-CloudWatch and metric filters were applied to extract functional
-attributes under both controlled baseline (non-compromised) and
-active adversary exploit (compromised) conditions across four
-application-layer vulnerability vectors:
-
-1. Event Injection
-2. Broken Authentication
-3. Sensitive Data Exposure
-4. Security Misconfiguration
-
----
+| File | Description |
+|---|---|
+| `serverless_forensics_final_v13.csv` | Raw execution duration telemetry (96 observations) |
 
 ## Dataset Structure
 
-The dataset consists of **48 independent runtime observations**:
-n = 6 per group (compromised / non-compromised) per attack scenario,
-across 4 scenarios.
+The CSV contains 96 observations across four AWS Lambda attack scenarios, 12 compromised and 12 non-compromised invocations per scenario.
 
 | Column | Description |
 |---|---|
-| `group` | Operational state: `compromised` or `non-compromised` |
-| `attack_scenario` | The targeted vulnerability exploit scenario |
-| `duration_ms` | Primary dependent variable — total Lambda execution time (ms) |
+| `group` | `compromised` or `non-compromised` |
+| `attack_scenario` | One of four OWASP-derived attack classes |
+| `duration_ms` | Lambda function execution duration (ms) |
 | `avg_incidence_rate` | CWE average incidence rate for the attack class |
-| `total_occurrences` | Total NVD occurrence count for the attack class |
+| `total_occurrences` | NVD total CVE occurrences for the attack class |
 
----
+## Attack Scenarios
 
-## Statistical Alignment
+- Event Injection
+- Broken Authentication
+- Sensitive Data Exposure
+- Security Misconfiguration
 
-Four independent Welch's t-tests were conducted — one per attack
-scenario — with Bonferroni correction applied to control familywise
-Type I error (α_adj = 0.05 / 4 = 0.0125).
+## Key Results
 
-| Attack Scenario | t | df_W | p (adj.) | Cohen's d |
+| Attack Scenario | t | df_W | Cohen's d | p |
 |---|---|---|---|---|
-| Event Injection | 37.55 | 9.92 | < 0.001 | 21.68 |
-| Broken Authentication | 26.89 | 6.42 | < 0.001 | 15.53 |
-| Sensitive Data Exposure | 22.25 | 8.93 | < 0.001 | 12.85 |
-| Security Misconfiguration | 31.03 | 8.21 | < 0.001 | 17.91 |
+| Event Injection | 7.73 | 13.21 | 3.16 | <0.001 |
+| Broken Authentication | 8.92 | 17.06 | 3.64 | <0.001 |
+| Sensitive Data Exposure | 12.44 | 15.05 | 5.08 | <0.001 |
+| Security Misconfiguration | 11.21 | 18.95 | 4.58 | <0.001 |
 
-All adjusted p-values survive Bonferroni correction. Mean execution
-durations in compromised environments ranged from 3.1× to 6.5×
-greater than non-compromised baselines across all four scenarios.
+Bonferroni-adjusted significance threshold: α = 0.0125. All four null hypotheses rejected.
 
-Per-scenario Levene's test results indicated equal variances
-(p > 0.05 in all cases); however, Welch's t-test was retained as
-the primary test for conservatism and methodological consistency.
+## Replication
 
----
+```python
+import pandas as pd
+from scipy import stats
 
-## Threshold-Based Classification
+df = pd.read_csv('serverless_forensics_final_v13.csv')
 
-Under both midpoint and μ_nc + 2σ_nc threshold strategies, the
-framework achieved
+for scenario in df['attack_scenario'].unique():
+    comp = df[(df['attack_scenario']==scenario) & (df['group']=='compromised')]['duration_ms']
+    noncomp = df[(df['attack_scenario']==scenario) & (df['group']=='non-compromised')]['duration_ms']
+    t, p = stats.ttest_ind(comp, noncomp, equal_var=False)
+    print(f'{scenario}: t={t:.2f}, p={p:.6f}')
+```
+
+## Authors
+
+- Joe Mansour — Charles Darwin University / IBM Infrastructure
+- Bharanidharan Shanmugam — Charles Darwin University (corresponding)
+- Kheng Cher Yeo — Charles Darwin University
+
+## License
+
+Data released for academic replication purposes. Please cite the associated paper if you use this dataset.# Serverless Forensics: Automated Compromise Detection via Welch's t-test
+
+Replication dataset and analysis for the paper *Serverless Forensics: Automated Compromise Detection via Welch's t-test* (Mansour, Shanmugam & Yeo, submitted to *Cybersecurity*, Springer Nature).
+
+## Repository Contents
+
+| File | Description |
+|---|---|
+| `serverless_forensics_final_v13.csv` | Raw execution duration telemetry (96 observations) |
+
+## Dataset Structure
+
+The CSV contains 96 observations across four AWS Lambda attack scenarios, 12 compromised and 12 non-compromised invocations per scenario.
+
+| Column | Description |
+|---|---|
+| `group` | `compromised` or `non-compromised` |
+| `attack_scenario` | One of four OWASP-derived attack classes |
+| `duration_ms` | Lambda function execution duration (ms) |
+| `avg_incidence_rate` | CWE average incidence rate for the attack class |
+| `total_occurrences` | NVD total CVE occurrences for the attack class |
+
+## Attack Scenarios
+
+- Event Injection
+- Broken Authentication
+- Sensitive Data Exposure
+- Security Misconfiguration
+
+## Key Results
+
+| Attack Scenario | t | df_W | Cohen's d | p |
+|---|---|---|---|---|
+| Event Injection | 7.73 | 13.21 | 3.16 | <0.001 |
+| Broken Authentication | 8.92 | 17.06 | 3.64 | <0.001 |
+| Sensitive Data Exposure | 12.44 | 15.05 | 5.08 | <0.001 |
+| Security Misconfiguration | 11.21 | 18.95 | 4.58 | <0.001 |
+
+Bonferroni-adjusted significance threshold: α = 0.0125. All four null hypotheses rejected.
+
+## Replication
+
+```python
+import pandas as pd
+from scipy import stats
+
+df = pd.read_csv('serverless_forensics_final_v13.csv')
+
+for scenario in df['attack_scenario'].unique():
+    comp = df[(df['attack_scenario']==scenario) & (df['group']=='compromised')]['duration_ms']
+    noncomp = df[(df['attack_scenario']==scenario) & (df['group']=='non-compromised')]['duration_ms']
+    t, p = stats.ttest_ind(comp, noncomp, equal_var=False)
+    print(f'{scenario}: t={t:.2f}, p={p:.6f}')
+```
+
+## Authors
+
+- Joe Mansour — Charles Darwin University / IBM Infrastructure
+- Bharanidharan Shanmugam — Charles Darwin University (corresponding)
+- Kheng Cher Yeo — Charles Darwin University
+
+## License
+
+Data released for academic replication purposes. Please cite the associated paper if you use this dataset.
