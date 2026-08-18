@@ -1,127 +1,35 @@
-# Serverless Forensics: Automated Compromise Detection via Welch's t-test
+# Serverless Forensics: Welch's t-test Dataset
 
-Replication dataset and analysis for the paper *Serverless Forensics: Automated Compromise Detection via Welch's t-test* (Mansour, Shanmugam & Yeo, submitted to *Cybersecurity*, Springer Nature).
+Dataset supporting the paper "Serverless Forensics: Automated Compromise
+Detection via Welch's t-test" (Mansour, Shanmugam, Yeo).
 
-## Repository Contents
+## File
 
-| File | Description |
-|---|---|
-| `serverless_forensics_final_v13.csv` | Raw execution duration telemetry (96 observations) |
+`serverless_forensics_final.csv` — 96 rows, one per Lambda invocation.
 
-## Dataset Structure
-
-The CSV contains 96 observations across four AWS Lambda attack scenarios, 12 compromised and 12 non-compromised invocations per scenario.
+## Columns
 
 | Column | Description |
 |---|---|
-| `group` | `compromised` or `non-compromised` |
-| `attack_scenario` | One of four OWASP-derived attack classes |
-| `duration_ms` | Lambda function execution duration (ms) |
-| `avg_incidence_rate` | CWE average incidence rate for the attack class |
-| `total_occurrences` | NVD total CVE occurrences for the attack class |
+| `group` | Experimental condition: `compromised` or `non-compromised` |
+| `attack_scenario` | One of four OWASP-derived attack scenarios: Event Injection, Broken Authentication, Sensitive Data Exposure, Security Misconfiguration |
+| `duration_ms` | AWS Lambda execution duration (ms), captured via CloudWatch — the primary dependent variable analyzed with Welch's t-test |
+| `avg_incidence_rate` | Average CWE incidence rate (%) for the corresponding attack category, from the MITRE CWE / NVD mapping (see Table 1 of the paper). Constant across all 12 rows within a scenario — this is a scenario-level value, not per-invocation. |
+| `total_occurrences` | Total NVD vulnerability record count for the corresponding CWE cluster, as of the query date (see Table 1 of the paper). Also scenario-level, not per-invocation. |
 
-## Attack Scenarios
+## Structure
 
-- Event Injection
-- Broken Authentication
-- Sensitive Data Exposure
-- Security Misconfiguration
+n = 12 independent invocations per condition (compromised / non-compromised)
+per attack scenario, across 4 scenarios = 96 total observations.
 
-## Key Results
+## Reproducing the analysis
 
-| Attack Scenario | t | df_W | Cohen's d | p |
-|---|---|---|---|---|
-| Event Injection | 7.73 | 13.21 | 3.16 | <0.001 |
-| Broken Authentication | 8.92 | 17.06 | 3.64 | <0.001 |
-| Sensitive Data Exposure | 12.44 | 15.05 | 5.08 | <0.001 |
-| Security Misconfiguration | 11.21 | 18.95 | 4.58 | <0.001 |
-
-Bonferroni-adjusted significance threshold: α = 0.0125. All four null hypotheses rejected.
-
-## Replication
-
-```python
-import pandas as pd
-from scipy import stats
-
-df = pd.read_csv('serverless_forensics_final_v13.csv')
-
-for scenario in df['attack_scenario'].unique():
-    comp = df[(df['attack_scenario']==scenario) & (df['group']=='compromised')]['duration_ms']
-    noncomp = df[(df['attack_scenario']==scenario) & (df['group']=='non-compromised')]['duration_ms']
-    t, p = stats.ttest_ind(comp, noncomp, equal_var=False)
-    print(f'{scenario}: t={t:.2f}, p={p:.6f}')
-```
-
-## Authors
-
-- Joe Mansour — Charles Darwin University / IBM Infrastructure
-- Bharanidharan Shanmugam — Charles Darwin University (corresponding)
-- Kheng Cher Yeo — Charles Darwin University
+For each attack scenario, a Welch's t-test (unequal-variance, two-tailed) was
+computed comparing `duration_ms` between the `compromised` and
+`non-compromised` groups, with Bonferroni correction (α = 0.05/4 = 0.0125)
+applied across the four scenarios. See Sections 3.4 and 4.6–4.7 of the paper
+for full methodology.
 
 ## License
 
-Data released for academic replication purposes. Please cite the associated paper if you use this dataset.# Serverless Forensics: Automated Compromise Detection via Welch's t-test
-
-Replication dataset and analysis for the paper *Serverless Forensics: Automated Compromise Detection via Welch's t-test* (Mansour, Shanmugam & Yeo, submitted to *Cybersecurity*, Springer Nature).
-
-## Repository Contents
-
-| File | Description |
-|---|---|
-| `serverless_forensics_final_v13.csv` | Raw execution duration telemetry (96 observations) |
-
-## Dataset Structure
-
-The CSV contains 96 observations across four AWS Lambda attack scenarios, 12 compromised and 12 non-compromised invocations per scenario.
-
-| Column | Description |
-|---|---|
-| `group` | `compromised` or `non-compromised` |
-| `attack_scenario` | One of four OWASP-derived attack classes |
-| `duration_ms` | Lambda function execution duration (ms) |
-| `avg_incidence_rate` | CWE average incidence rate for the attack class |
-| `total_occurrences` | NVD total CVE occurrences for the attack class |
-
-## Attack Scenarios
-
-- Event Injection
-- Broken Authentication
-- Sensitive Data Exposure
-- Security Misconfiguration
-
-## Key Results
-
-| Attack Scenario | t | df_W | Cohen's d | p |
-|---|---|---|---|---|
-| Event Injection | 7.73 | 13.21 | 3.16 | <0.001 |
-| Broken Authentication | 8.92 | 17.06 | 3.64 | <0.001 |
-| Sensitive Data Exposure | 12.44 | 15.05 | 5.08 | <0.001 |
-| Security Misconfiguration | 11.21 | 18.95 | 4.58 | <0.001 |
-
-Bonferroni-adjusted significance threshold: α = 0.0125. All four null hypotheses rejected.
-
-## Replication
-
-```python
-import pandas as pd
-from scipy import stats
-
-df = pd.read_csv('serverless_forensics_final_v13.csv')
-
-for scenario in df['attack_scenario'].unique():
-    comp = df[(df['attack_scenario']==scenario) & (df['group']=='compromised')]['duration_ms']
-    noncomp = df[(df['attack_scenario']==scenario) & (df['group']=='non-compromised')]['duration_ms']
-    t, p = stats.ttest_ind(comp, noncomp, equal_var=False)
-    print(f'{scenario}: t={t:.2f}, p={p:.6f}')
-```
-
-## Authors
-
-- Joe Mansour — Charles Darwin University / IBM Infrastructure
-- Bharanidharan Shanmugam — Charles Darwin University (corresponding)
-- Kheng Cher Yeo — Charles Darwin University
-
-## License
-
-Data released for academic replication purposes. Please cite the associated paper if you use this dataset.
+CC BY 4.0
