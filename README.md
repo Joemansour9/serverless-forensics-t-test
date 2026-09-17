@@ -1,7 +1,8 @@
 # Serverless Forensics: Welch's t-test Dataset
 
-Dataset supporting the paper "Serverless Forensics: Automated Compromise
-Detection via Welch's t-test" (Mansour, Shanmugam, Yeo).
+Dataset supporting the paper "Serverless Forensics: A Statistical Analysis of
+Execution Telemetry Under Controlled Attack Conditions" (Mansour,
+Shanmugam, Yeo).
 
 ## File
 
